@@ -41,7 +41,7 @@ public class MenuState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.darkGray);
+        g.setColor(Color.blue);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.drawImage(Images.title,0,0,handler.getWidth(),handler.getHeight(),null);
         uiManager.Render(g);
