@@ -21,6 +21,7 @@ public class Player {
     public int moveCounter;
     
     public int speed = 5;
+    public double currScore = 0.0;
 
     public String direction;//is your first name one?
 
@@ -238,6 +239,7 @@ public class Player {
         }
         handler.getWorld().body.addLast(tail);
         handler.getWorld().playerLocation[tail.x][tail.y] = true;
+        currScore = Math.sqrt((2*currScore)+1);
     }
 
     public void kill(){
