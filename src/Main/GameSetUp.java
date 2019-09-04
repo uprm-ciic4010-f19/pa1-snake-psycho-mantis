@@ -115,7 +115,11 @@ public class GameSetUp implements Runnable {
         thread = new Thread(this);
         thread.start();
     }
-
+    public void pause() {
+    	State.setState(handler.getGame().pauseState); // Pauses the game
+    		
+    }
+    
     public void run(){
 
         //initiallizes everything in order to run without breaking

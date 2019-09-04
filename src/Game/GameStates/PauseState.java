@@ -6,6 +6,7 @@ import UI.UIImageButton;
 import UI.UIManager;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by AlexVR on 7/1/2018.
@@ -63,5 +64,6 @@ public class PauseState extends State {
         g.drawImage(Images.Pause,0,0,800,600,null);
         uiManager.Render(g);
 
-    }
+    } 
+     
 }
