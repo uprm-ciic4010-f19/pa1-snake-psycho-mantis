@@ -4,9 +4,9 @@ import Main.Handler;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.Random;
+import javax.swing.JLabel;
 
-import Game.GameStates.State;
+
 
 /**
  * Created by AlexVR on 7/2/2018.
@@ -16,6 +16,7 @@ public class Player {
     public int lenght;
     public boolean justAte;
     private Handler handler;
+    private JLabel score;
 
     public int xCoord;
     public int yCoord;
@@ -23,7 +24,7 @@ public class Player {
     public int moveCounter;
     
     public int speed = 5;
-    public double currScore = 0.0;
+    public double currScore ;
 
     public String direction;//is your first name one?
 
@@ -35,6 +36,8 @@ public class Player {
         direction= "Right";
         justAte = false;
         lenght= 1;
+        currScore=0;
+        score= new JLabel("Score"+currScore);
 
     }
 
@@ -135,14 +138,14 @@ public class Player {
                 }
                 if(handler.getWorld().appleLocation[i][j]) {
                 	if(handler.getWorld().apple.good) {
-                		g.setColor(Color.YELLOW);
+                		g.setColor(Color.RED);
                 		 g.fillRect((i*handler.getWorld().GridPixelsize),
                                  (j*handler.getWorld().GridPixelsize),
                                  handler.getWorld().GridPixelsize,
                                  handler.getWorld().GridPixelsize);
                 	}
                 	else {
-                		g.setColor(Color.RED);
+                		g.setColor(Color.YELLOW);
                		 g.fillRect((i*handler.getWorld().GridPixelsize),
                                 (j*handler.getWorld().GridPixelsize),
                                 handler.getWorld().GridPixelsize,
@@ -157,8 +160,10 @@ public class Player {
     }
 
     public void Eat(){
-    	
-    	 currScore = Math.sqrt((2*currScore)+1);
+    	currScore += Math.sqrt((2*currScore)+1);
+    	speed = speed-1;  
+    	this.justAte=true;
+    	this.handler.getGame().setScore(currScore);
     	 System.out.println(this.currScore);
         lenght++;
         Tail tail= null;
@@ -285,5 +290,15 @@ public class Player {
 
     public void setJustAte(boolean justAte) {
         this.justAte = justAte;
+        
     }
+
+	public double getCurrScore() {
+		return currScore;
+	}
+
+	public void setCurrScore(double currScore) {
+		this.currScore = currScore;
+	}
+    
 }

@@ -22,7 +22,7 @@ public class Apple {
     }
 
     public void isGood() {
-    	
+    	// Make it so after a certain amount of steps good=false
     	if (!good) {
     		
     		handler.getWorld().player.lenght--;

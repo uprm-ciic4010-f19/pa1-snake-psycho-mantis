@@ -4,12 +4,15 @@ import Display.DisplayScreen;
 import Game.GameStates.GameState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
+import Game.GameStates.OptionsState;
 import Game.GameStates.State;
 import Input.KeyManager;
 import Input.MouseManager;
 import Resources.Images;
 
 import javax.sound.sampled.*;
+import javax.swing.JLabel;
+
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
@@ -25,6 +28,8 @@ public class GameSetUp implements Runnable {
     private DisplayScreen display;
     private int width, height;
     public String title;
+    private JLabel label;
+    private double score;
 
     private boolean running = false;
     private Thread thread;
@@ -45,6 +50,7 @@ public class GameSetUp implements Runnable {
     public State gameState;
     public State menuState;
     public State pauseState;
+    public State optionsState;
 
     //Res.music
     private InputStream audioFile;
@@ -62,6 +68,7 @@ public class GameSetUp implements Runnable {
         this.title = title;
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+        score=0;
 
     }
 
@@ -72,16 +79,18 @@ public class GameSetUp implements Runnable {
         display.getFrame().addMouseMotionListener(mouseManager);
         display.getCanvas().addMouseListener(mouseManager);
         display.getCanvas().addMouseMotionListener(mouseManager);
-
-        Images img = new Images();
-
-
         handler = new Handler(this);
+        
+        Images img = new Images();
+        
+
+        
 
         gameState = new GameState(handler);
         menuState = new MenuState(handler);
         pauseState = new PauseState(handler);
-
+        optionsState = new OptionsState(handler);
+        
         State.setState(menuState);
 
         try {
@@ -121,9 +130,11 @@ public class GameSetUp implements Runnable {
     }
     
     public void run(){
+    	
 
         //initiallizes everything in order to run without breaking
         init();
+       
 
         int fps = 60;
         double timePerTick = 1000000000 / fps;
@@ -134,6 +145,7 @@ public class GameSetUp implements Runnable {
         int ticks = 0;
 
         while(running){
+        	
             //makes sure the games runs smoothly at 60 FPS
             now = System.nanoTime();
             delta += (now - lastTime) / timePerTick;
@@ -141,6 +153,7 @@ public class GameSetUp implements Runnable {
             lastTime = now;
 
             if(delta >= 1){
+            	
                 //re-renders and ticks the game around 60 times per second
                 tick();
                 render();
@@ -169,6 +182,7 @@ public class GameSetUp implements Runnable {
 
     private void render(){
         bs = display.getCanvas().getBufferStrategy();
+       
         if(bs == null){
             display.getCanvas().createBufferStrategy(3);
             return;
@@ -215,5 +229,13 @@ public class GameSetUp implements Runnable {
     public int getHeight(){
         return height;
     }
+
+	public double getScore() {
+		return score;
+	}
+
+	public void setScore(double score) {
+		this.score = score;
+	}
 }
 

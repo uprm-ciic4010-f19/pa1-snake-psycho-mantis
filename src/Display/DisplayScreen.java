@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.JLabel;
 
 /**
  * Created by AlexVR on 7/1/2018.
@@ -13,6 +14,7 @@ import javax.swing.*;
 public class DisplayScreen {
 
     private JFrame frame;
+	private JLabel label;
     private Canvas canvas;
     private String title;
     private int width, height;
@@ -21,8 +23,6 @@ public class DisplayScreen {
         this.title = title;
         this.width = width;
         this.height = height;
-
-
 
         createDisplay();
     }
@@ -47,12 +47,15 @@ public class DisplayScreen {
         canvas.setMaximumSize(new Dimension(width, height));
         canvas.setMinimumSize(new Dimension(width, height));
         canvas.setFocusable(false);
-        canvas.setBackground(DarkPurple);
+        canvas.setBackground(DarkPurple);   
 
         frame.add(canvas);
         frame.pack();
     }
 
+	public void setLabel(JLabel label) {
+		this.label = label;
+	}
     public Canvas getCanvas(){
         return canvas;
     }
@@ -60,5 +63,7 @@ public class DisplayScreen {
     public JFrame getFrame(){
         return frame;
     }
-
+    public JLabel getLabel() {
+    	return label; 
+    }
 }

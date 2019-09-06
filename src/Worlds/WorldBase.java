@@ -59,6 +59,7 @@ public abstract class WorldBase {
             g.setColor(DarkPurple);
             g.drawLine(0, i, handler.getWidth() , i);
             g.drawLine(i,0,i,handler.getHeight());
+            
 
         }
 
