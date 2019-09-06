@@ -11,12 +11,26 @@ public class Apple {
 
     public int xCoord;
     public int yCoord;
-
-    public Apple(Handler handler,int x, int y){
+    public boolean good;
+    
+    public Apple(Handler handler,int x, int y,Boolean good){
         this.handler=handler;
         this.xCoord=x;
         this.yCoord=y;
+        this.good=good;
+        
     }
 
+    public void isGood() {
+    	
+    	if (!good) {
+    		
+    		handler.getWorld().player.lenght--;
+    		handler.getWorld().player.currScore = handler.getWorld().player.currScore-Math.sqrt((2*handler.getWorld().player.currScore)+1);
+    		
+    		
+    	}
+    	
+    }
 
 }

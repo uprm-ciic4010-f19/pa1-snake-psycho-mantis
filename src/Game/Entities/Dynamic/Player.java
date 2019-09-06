@@ -122,16 +122,32 @@ public class Player {
     }
 
     public void render(Graphics g,Boolean[][] playeLocation){
-        Random r = new Random();
+
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
                 g.setColor(Color.GREEN);
 
-                if(playeLocation[i][j]||handler.getWorld().appleLocation[i][j]){
+                if(playeLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
+                }
+                if(handler.getWorld().appleLocation[i][j]) {
+                	if(handler.getWorld().apple.good) {
+                		g.setColor(Color.YELLOW);
+                		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                 (j*handler.getWorld().GridPixelsize),
+                                 handler.getWorld().GridPixelsize,
+                                 handler.getWorld().GridPixelsize);
+                	}
+                	else {
+                		g.setColor(Color.RED);
+               		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                (j*handler.getWorld().GridPixelsize),
+                                handler.getWorld().GridPixelsize,
+                                handler.getWorld().GridPixelsize);
+                }
                 }
 
             }
@@ -141,6 +157,9 @@ public class Player {
     }
 
     public void Eat(){
+    	
+    	 currScore = Math.sqrt((2*currScore)+1);
+    	 System.out.println(this.currScore);
         lenght++;
         Tail tail= null;
         handler.getWorld().appleLocation[xCoord][yCoord]=false;
@@ -246,7 +265,7 @@ public class Player {
         }
         handler.getWorld().body.addLast(tail);
         handler.getWorld().playerLocation[tail.x][tail.y] = true;
-        currScore = Math.sqrt((2*currScore)+1);
+       
     }
 
     public void kill(){
