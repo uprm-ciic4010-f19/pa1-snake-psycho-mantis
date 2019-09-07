@@ -30,7 +30,19 @@ public class OptionsState extends State {
                 State.setState(handler.getGame().pauseState);
             }
         }));
-    }
+        
+        uiManager.addObjects(new UIImageButton(handler.getWidth()/2-64, handler.getHeight()/2-100, 150, 150, Images.party, new ClickListlener() {
+            @Override
+            public void onClick() {
+                handler.getMouseManager().setUimanager(null);
+                handler.getGame().reStart(); 
+                handler.getWorld().player.setPartyTime(true); 
+            }
+        }));
+        
+        }
+    
+    	
 
     @Override
     public void tick() {
@@ -41,9 +53,8 @@ public class OptionsState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.white);
+    	g.setColor(Color.MAGENTA);
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
-        g.drawImage(Images.title,0,0,handler.getWidth(),handler.getHeight(),null);
         uiManager.Render(g);
 
     }

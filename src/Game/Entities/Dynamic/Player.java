@@ -5,7 +5,7 @@ import Main.Handler;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import javax.swing.JLabel;
-
+import java.util.Random;
 
 
 /**
@@ -17,7 +17,8 @@ public class Player {
     public boolean justAte;
     private Handler handler;
     private JLabel score;
-
+    public boolean partyTime;
+	
     public int xCoord;
     public int yCoord;
 
@@ -27,7 +28,15 @@ public class Player {
     public double currScore ;
 
     public String direction;//is your first name one?
+    
+    Random rand = new Random();//random color generator
 
+	float r = rand.nextFloat();
+	float v = rand.nextFloat();
+	float b = rand.nextFloat();
+	
+	Color randomColor = new Color(r,v,b);
+	
     public Player(Handler handler){
         this.handler = handler;
         xCoord = 0;
@@ -35,10 +44,18 @@ public class Player {
         moveCounter = 0;
         direction= "Right";
         justAte = false;
+        partyTime = false;
         lenght= 1;
         currScore=0;
         score= new JLabel("Score"+currScore);
+    
+        Random rand = new Random();
 
+    	float r = rand.nextFloat();
+    	float v = rand.nextFloat();
+    	float b = rand.nextFloat();
+    	
+    	Color randomColor = new Color(r,v,b);
     }
 
     public void tick(){
@@ -126,9 +143,11 @@ public class Player {
 
     public void render(Graphics g,Boolean[][] playeLocation){
 
+    	if (!partyTime) {
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
                 g.setColor(Color.GREEN);
+                
 
                 if(playeLocation[i][j]){
                     g.fillRect((i*handler.getWorld().GridPixelsize),
@@ -151,13 +170,44 @@ public class Player {
                                 handler.getWorld().GridPixelsize,
                                 handler.getWorld().GridPixelsize);
                 }
+                	
+             
                 }
-
+                	
             }
         }
+   }
+    	else {   
+    		for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
+            for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
+            		g.setColor(randomColor); //changed color every time disco ball is clicked
 
-
-    }
+                if(playeLocation[i][j]){
+                    g.fillRect((i*handler.getWorld().GridPixelsize),
+                            (j*handler.getWorld().GridPixelsize),
+                            handler.getWorld().GridPixelsize,
+                            handler.getWorld().GridPixelsize);
+                }
+                if(handler.getWorld().appleLocation[i][j]) {
+                	if(handler.getWorld().apple.good) {
+                		g.setColor(Color.RED);
+                		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                 (j*handler.getWorld().GridPixelsize),
+                                 handler.getWorld().GridPixelsize,
+                                 handler.getWorld().GridPixelsize);
+                	}
+                	else {
+                		g.setColor(Color.GREEN);
+               		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                (j*handler.getWorld().GridPixelsize),
+                                handler.getWorld().GridPixelsize,
+                                handler.getWorld().GridPixelsize);
+                		}
+                	}
+                }
+            }
+        }
+    }        
 
     public void Eat(){
     	currScore += Math.sqrt((2*currScore)+1);
@@ -284,6 +334,9 @@ public class Player {
         }
     }
 
+   
+    
+   
     public boolean isJustAte() {
         return justAte;
     }
@@ -300,5 +353,12 @@ public class Player {
 	public void setCurrScore(double currScore) {
 		this.currScore = currScore;
 	}
+    public boolean partyTime() {
+    	return partyTime;
+    }
     
+    public void setPartyTime(boolean partyTime) {
+    	this.partyTime = partyTime;
+    	
+    }
 }

@@ -17,15 +17,19 @@ public class Images {
     public static BufferedImage[] Resume;
     public static BufferedImage[] BTitle;
     public static BufferedImage[] Options;
+    public static BufferedImage OptionsScreen;
+    public static BufferedImage[] party;
     public static ImageIcon icon;
-
+    
+    
     public Images() {
 
         butstart = new BufferedImage[3];
         Resume = new BufferedImage[2];
         BTitle = new BufferedImage[2];
         Options = new BufferedImage[2];
-
+        party = new BufferedImage[3];
+        
         try {
 
             title = ImageIO.read(getClass().getResourceAsStream("/Sheets/Title.png"));
@@ -39,7 +43,10 @@ public class Images {
             butstart[0]= ImageIO.read(getClass().getResourceAsStream("/Buttons/NormBut.png"));//normbut
             butstart[1]= ImageIO.read(getClass().getResourceAsStream("/Buttons/HoverBut.png"));//hoverbut
             butstart[2]= ImageIO.read(getClass().getResourceAsStream("/Buttons/ClickedBut.png"));//clickbut
-
+            party[0]= ImageIO.read(getClass().getResourceAsStream("/Buttons/NormParty.png")); //normParty
+            party[1]= ImageIO.read(getClass().getResourceAsStream("/Buttons/HoverParty.png")); //hoverParty
+            party[2]= ImageIO.read(getClass().getResourceAsStream("/Buttons/ClickedParty.png")); //clickedParty
+            
             icon =  new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/Sheets/icon.png")));
 
 
