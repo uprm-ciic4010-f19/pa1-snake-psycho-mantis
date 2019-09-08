@@ -1,7 +1,9 @@
 package Main;
 
 import Display.DisplayScreen;
+
 import Game.GameStates.GameState;
+import Game.GameStates.HelpState;
 import Game.GameStates.MenuState;
 import Game.GameStates.PauseState;
 import Game.GameStates.OptionsState;
@@ -28,7 +30,6 @@ public class GameSetUp implements Runnable {
     private DisplayScreen display;
     private int width, height;
     public String title;
-    private JLabel label;
     private double score;
 
     private boolean running = false;
@@ -51,6 +52,7 @@ public class GameSetUp implements Runnable {
     public State menuState;
     public State pauseState;
     public State optionsState;
+    public State helpState;
 
     //Res.music
     private InputStream audioFile;
@@ -90,6 +92,7 @@ public class GameSetUp implements Runnable {
         menuState = new MenuState(handler);
         pauseState = new PauseState(handler);
         optionsState = new OptionsState(handler);
+        helpState = new HelpState(handler);
         
         State.setState(menuState);
 

@@ -1,8 +1,13 @@
 package Worlds;
 
 import Game.Entities.Dynamic.Player;
+
+
 import Game.Entities.Dynamic.Tail;
 import Game.Entities.Static.Apple;
+import Game.Entities.Static.DoubleUp;
+import Game.Entities.Static.SlowDown;
+
 import Main.Handler;
 
 import java.awt.*;
@@ -29,11 +34,15 @@ public abstract class WorldBase {
 
 
     public Boolean appleOnBoard;
-//    public Boolean partyTime;
+    public Boolean doubleUpOnBoard;
+    public Boolean slowDownOnBoard;
     public Apple apple;
+    public DoubleUp doubleUp;
+    public SlowDown slowDown;
     public Boolean[][] appleLocation;
-
-
+    public Boolean[][] doubleUpLocation;
+    public Boolean[][] slowDownLocation;
+    
     public Boolean[][] playerLocation;
 
     public LinkedList<Tail> body = new LinkedList<>();
@@ -43,8 +52,8 @@ public abstract class WorldBase {
         this.handler = handler;
 
         appleOnBoard = false;
-//        partyTime = false;
-
+        doubleUpOnBoard = false;
+        slowDownOnBoard = false;
     }
     public void tick(){
 

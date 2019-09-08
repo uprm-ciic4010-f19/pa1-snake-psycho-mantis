@@ -2,9 +2,9 @@ package Game.Entities.Dynamic;
 
 import Main.Handler;
 
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import javax.swing.JLabel;
 import java.util.Random;
 
 
@@ -15,21 +15,22 @@ public class Player {
 
     public int lenght;
     public boolean justAte;
+    public boolean justDoubled;
+    public boolean justSlowed;
     private Handler handler;
-    private JLabel score;
     public boolean partyTime;
-	
+    Color DarkPurple= new Color(66,28,82);
     public int xCoord;
     public int yCoord;
 
     public int moveCounter;
     
-    public int speed = 5;
+    public int speed = 10;
     public double currScore ;
 
     public String direction;//is your first name one?
     
-    Random rand = new Random();//random color generator
+    Random rand = new Random(); //random color generator
 
 	float r = rand.nextFloat();
 	float v = rand.nextFloat();
@@ -44,10 +45,11 @@ public class Player {
         moveCounter = 0;
         direction= "Right";
         justAte = false;
+        justDoubled = false; 
+        justSlowed = false;
         partyTime = false;
         lenght= 1;
-        currScore=0;
-        score= new JLabel("Score"+currScore);
+        currScore=0.0;
     
         Random rand = new Random();
 
@@ -90,8 +92,6 @@ public class Player {
     
         }
 
-    
-
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
         int x = xCoord;
@@ -126,21 +126,36 @@ public class Player {
                 	}
                 break;
         }
-        handler.getWorld().playerLocation[xCoord][yCoord]=true;
+        handler.getWorld().playerLocation[xCoord][yCoord]=true; 
 
 
         if(handler.getWorld().appleLocation[xCoord][yCoord]){
-            Eat();
-        }
+            Eat();}
 
         if(!handler.getWorld().body.isEmpty()) {
             handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
             handler.getWorld().body.removeLast();
             handler.getWorld().body.addFirst(new Tail(x, y,handler));
         }
-
+        
+        if(handler.getWorld().doubleUpLocation[xCoord][yCoord]){
+            Dub();}
+        
+        if(!handler.getWorld().body.isEmpty()) {
+            handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
+            handler.getWorld().body.removeLast();
+            handler.getWorld().body.addFirst(new Tail(x, y,handler));
+        }
+        
+        if(handler.getWorld().slowDownLocation[xCoord][yCoord]){
+            Slow();}
+        
+        if(!handler.getWorld().body.isEmpty()) {
+            handler.getWorld().playerLocation[handler.getWorld().body.getLast().x][handler.getWorld().body.getLast().y] = false;
+            handler.getWorld().body.removeLast();
+            handler.getWorld().body.addFirst(new Tail(x, y,handler));
+        }
     }
-
     public void render(Graphics g,Boolean[][] playeLocation){
 
     	if (!partyTime) {
@@ -155,34 +170,74 @@ public class Player {
                             handler.getWorld().GridPixelsize,
                             handler.getWorld().GridPixelsize);
                 }
+          
+                if(handler.getWorld().doubleUpLocation[i][j]) { 
+                	
+                	if (speed>0 && currScore>0.0) {
+                		
+            
+                		g.setColor(Color.ORANGE);
+                		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                 (j*handler.getWorld().GridPixelsize),
+                                 handler.getWorld().GridPixelsize,
+                                 handler.getWorld().GridPixelsize);
+                	}	
+                	else {
+                		g.setColor(DarkPurple);
+               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                (j*handler.getWorld().GridPixelsize),
+                                handler.getWorld().GridPixelsize,
+                                handler.getWorld().GridPixelsize);
+                	}
+                }
+                
+                if(handler.getWorld().slowDownLocation[i][j]) {
+                	
+                	if (speed<2) {
+                    g.setColor(Color.cyan);
+                    g.fillRect((i*handler.getWorld().GridPixelsize),
+                            (j*handler.getWorld().GridPixelsize),
+                            handler.getWorld().GridPixelsize,
+                            handler.getWorld().GridPixelsize);
+                	}
+                	else {
+                		g.setColor(DarkPurple);
+               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                (j*handler.getWorld().GridPixelsize),
+                                handler.getWorld().GridPixelsize,
+                                handler.getWorld().GridPixelsize);
+                			}	
+                		}
+                	
+                
+                
                 if(handler.getWorld().appleLocation[i][j]) {
                 	if(handler.getWorld().apple.good) {
-                		g.setColor(Color.RED);
+                		 g.setColor(Color.RED);
                 		 g.fillRect((i*handler.getWorld().GridPixelsize),
                                  (j*handler.getWorld().GridPixelsize),
                                  handler.getWorld().GridPixelsize,
                                  handler.getWorld().GridPixelsize);
                 	}
                 	else {
-                		g.setColor(Color.YELLOW);
+                	 g.setColor(Color.YELLOW);
                		 g.fillRect((i*handler.getWorld().GridPixelsize),
                                 (j*handler.getWorld().GridPixelsize),
                                 handler.getWorld().GridPixelsize,
                                 handler.getWorld().GridPixelsize);
+                		}
+                	}  	
                 }
-                	
-             
-                }
-                	
-            }
-        }
-   }
+            }   
+        }   
+    	
     	else {   
     		for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-            		g.setColor(randomColor); //changed color every time disco ball is clicked
-
-                if(playeLocation[i][j]){
+            		g.setColor(randomColor); 
+            		//changes color every time dance ball is clicked
+            		// make it change color every 30 ticks or 6 moves
+            		 if(playeLocation[i][j]) {
                     g.fillRect((i*handler.getWorld().GridPixelsize),
                             (j*handler.getWorld().GridPixelsize),
                             handler.getWorld().GridPixelsize,
@@ -302,7 +357,7 @@ public class Player {
                             tail=(new Tail(this.xCoord-1,this.yCoord,handler));
                         }else{
                             tail=(new Tail(this.xCoord+1,this.yCoord,handler));
-                        } System.out.println("Tu biscochito");
+                        }
                     }
                 }else{
                     if(handler.getWorld().body.getLast().y!=0){
@@ -322,7 +377,37 @@ public class Player {
         handler.getWorld().playerLocation[tail.x][tail.y] = true;
        
     }
-
+    
+    public void Dub(){
+    	if (speed>0 && currScore>0) {
+    	currScore = currScore*2;
+    	speed = speed-3;  
+    	this.justDoubled=true;
+    	this.handler.getGame().setScore(currScore);
+    	System.out.println(this.currScore);
+        handler.getWorld().doubleUpLocation[xCoord][yCoord]=false;
+        handler.getWorld().doubleUpOnBoard=false;
+    	}
+    else {
+    	this.justDoubled=false;
+    	}
+   }
+    
+    public void Slow(){
+    	if (speed<2) {
+    	currScore += 0.5*Math.sqrt((2*currScore)+1);
+    	speed = speed+3;  
+    	this.justSlowed=true;
+    	this.handler.getGame().setScore(currScore);
+    	System.out.println(this.currScore);
+        handler.getWorld().slowDownLocation[xCoord][yCoord]=false;
+        handler.getWorld().slowDownOnBoard=false;
+    	}
+    else {
+    	this.justSlowed=false;
+    	}
+   }
+    	
     public void kill(){
         lenght = 0;
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
@@ -345,7 +430,21 @@ public class Player {
         this.justAte = justAte;
         
     }
+    public boolean isJustDoubled() {
+    	return justDoubled;}
+    	
+    public void setJustDoubled(boolean justDoubled) {
+    	this.justDoubled = justDoubled;
+    }
+    
+	public boolean isJustSlowed() {
+		return justSlowed;}
+	
+	public void setJustSlowed(boolean justSlowed) {
+		this.justSlowed = justSlowed;
+}
 
+    
 	public double getCurrScore() {
 		return currScore;
 	}

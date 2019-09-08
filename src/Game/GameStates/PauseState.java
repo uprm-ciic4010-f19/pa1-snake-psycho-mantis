@@ -33,12 +33,12 @@ public class PauseState extends State {
 
         uiManager.addObjects(new UIImageButton(56, (223+(64+16))+(64+16), 128, 64, Images.BTitle, () -> {
             handler.getMouseManager().setUimanager(null);
-            State.setState(handler.getGame().menuState);
+            State.setState(handler.getGame().helpState);
         }));
 
 
 
-
+// Fix bug where Pause screen changes back to in game when holding ESC down
 
     }
 

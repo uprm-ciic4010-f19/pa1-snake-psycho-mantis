@@ -1,6 +1,8 @@
 package Worlds;
 
 import Game.Entities.Static.Apple;
+import Game.Entities.Static.DoubleUp;
+import Game.Entities.Static.SlowDown;
 import Main.Handler;
 
 import java.awt.*;
@@ -19,7 +21,8 @@ public class WorldOne extends WorldBase{
         GridPixelsize = (800/GridWidthHeightPixelCount);
         playerLocation = new Boolean[GridWidthHeightPixelCount][GridWidthHeightPixelCount];
         appleLocation = new Boolean[GridWidthHeightPixelCount][GridWidthHeightPixelCount];
-
+        doubleUpLocation = new Boolean[GridWidthHeightPixelCount][GridWidthHeightPixelCount];
+        slowDownLocation = new Boolean[GridWidthHeightPixelCount][GridWidthHeightPixelCount];
     }
 
     @Override
@@ -43,8 +46,42 @@ public class WorldOne extends WorldBase{
             appleLocation[appleX][appley]=true;
 
         }
-    }
+        
+        if(!doubleUpOnBoard){
+        	doubleUpOnBoard=true;
+            int doubleUpX = new Random().nextInt(handler.getWorld().GridWidthHeightPixelCount-1);
+            int doubleUpeY = new Random().nextInt(handler.getWorld().GridWidthHeightPixelCount-1);
 
+            //change coordinates till one is selected in which the player isn't standing
+            boolean niceCoordinates=false;
+            do{
+                if(!handler.getWorld().playerLocation[doubleUpX][doubleUpeY]){
+                    niceCoordinates=true;
+                }
+            }while(!niceCoordinates);
+
+            doubleUp = new DoubleUp(handler,doubleUpX,doubleUpeY);
+            doubleUpLocation[doubleUpX][doubleUpeY]=true;
+    }
+        if(!slowDownOnBoard){
+        	slowDownOnBoard=true;
+            int slowDownX = new Random().nextInt(handler.getWorld().GridWidthHeightPixelCount-1);
+            int slowDowneY = new Random().nextInt(handler.getWorld().GridWidthHeightPixelCount-1);
+
+            //change coordinates till one is selected in which the player isn't standing
+            boolean fineCoordinates=false;
+            do{
+                if(!handler.getWorld().playerLocation[slowDownX][slowDowneY]){
+                    fineCoordinates=true;
+                }
+            }while(!fineCoordinates);
+
+            slowDown = new SlowDown(handler,slowDownX,slowDowneY);
+            slowDownLocation[slowDownX][slowDowneY]=true;
+        }
+    }
+   
+    
     @Override
     public void render(Graphics g){
         super.render(g);
