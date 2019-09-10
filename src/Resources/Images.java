@@ -14,13 +14,14 @@ public class Images {
     public static BufferedImage[] butstart;
     public static BufferedImage title;
     public static BufferedImage Pause;
-    public static BufferedImage help;
     public static BufferedImage[] Resume;
     public static BufferedImage[] BTitle;
     public static BufferedImage[] Options;
     public static BufferedImage OptionsScreen;
     public static BufferedImage[] party;
     public static ImageIcon icon;
+    public static BufferedImage HelpScreen;
+    public static BufferedImage[] Return;
     
     public Images() {
 
@@ -29,12 +30,13 @@ public class Images {
         BTitle = new BufferedImage[2];
         Options = new BufferedImage[2];
         party = new BufferedImage[3];
+        Return = new BufferedImage[3];
+        
         
         try {
 
             title = ImageIO.read(getClass().getResourceAsStream("/Sheets/Title.png"));
             Pause = ImageIO.read(getClass().getResourceAsStream("/Buttons/Pause.png"));
-            help = ImageIO.read(getClass().getResourceAsStream("/Sheets/HelpScreen.png"));
             Resume[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/Resume.png"));
             Resume[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ResumeP.png"));
             BTitle[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/BTitle.png"));
@@ -47,6 +49,10 @@ public class Images {
             party[0]= ImageIO.read(getClass().getResourceAsStream("/Buttons/NormParty.png")); //normParty
             party[1]= ImageIO.read(getClass().getResourceAsStream("/Buttons/HoverParty.png")); //hoverParty
             party[2]= ImageIO.read(getClass().getResourceAsStream("/Buttons/ClickedParty.png")); //clickedParty
+            HelpScreen = ImageIO.read(getClass().getResourceAsStream("/Sheets/HelpScreen.png"));
+            Return[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ReturnNorm.png"));
+            Return[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ReturnHover.png"));
+            Return[2] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ReturnClicked.png"));
             
             icon =  new ImageIcon(ImageIO.read(getClass().getResourceAsStream("/Sheets/icon.png")));
 
