@@ -22,7 +22,7 @@ public class MenuState extends State {
         handler.getMouseManager().setUimanager(uiManager);
 
 
-        uiManager.addObjects(new UIImageButton(handler.getWidth()/2-64, handler.getHeight()/2-100, 150, 150, Images.butstart, new ClickListlener() {
+        uiManager.addObjects(new UIImageButton(handler.getWidth()/2-140, handler.getHeight()/2-225, 300, 300, Images.butstart, new ClickListlener() {
             @Override
             public void onClick() {
                 handler.getMouseManager().setUimanager(null);
@@ -41,12 +41,17 @@ public class MenuState extends State {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.blue);
+    	if (handler.getWorld().player.dead==false) {
         g.fillRect(0,0,handler.getWidth(),handler.getHeight());
         g.drawImage(Images.title,0,0,handler.getWidth(),handler.getHeight(),null);
         uiManager.Render(g);
 
     }
+    	else {
+    		g.fillRect(0,0,handler.getWidth(),handler.getHeight());
+            g.drawImage(Images.GameOver,0,0,handler.getWidth(),handler.getHeight(),null);
+            uiManager.Render(g);
+    	}
 
-
+}
 }

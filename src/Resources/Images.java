@@ -22,6 +22,7 @@ public class Images {
     public static ImageIcon icon;
     public static BufferedImage HelpScreen;
     public static BufferedImage[] Return;
+    public static BufferedImage GameOver;
     
     public Images() {
 
@@ -36,7 +37,7 @@ public class Images {
         try {
 
             title = ImageIO.read(getClass().getResourceAsStream("/Sheets/Title.png"));
-            Pause = ImageIO.read(getClass().getResourceAsStream("/Buttons/Pause.png"));
+            Pause = ImageIO.read(getClass().getResourceAsStream("/Sheets/Pause.png"));
             Resume[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/Resume.png"));
             Resume[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ResumeP.png"));
             BTitle[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/BTitle.png"));
@@ -50,6 +51,8 @@ public class Images {
             party[1]= ImageIO.read(getClass().getResourceAsStream("/Buttons/HoverParty.png")); //hoverParty
             party[2]= ImageIO.read(getClass().getResourceAsStream("/Buttons/ClickedParty.png")); //clickedParty
             HelpScreen = ImageIO.read(getClass().getResourceAsStream("/Sheets/HelpScreen.png"));
+            OptionsScreen = ImageIO.read(getClass().getResourceAsStream("/Sheets/OptionsScreen.png"));
+            GameOver = ImageIO.read(getClass().getResourceAsStream("/Sheets/GameOver.png"));
             Return[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ReturnNorm.png"));
             Return[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ReturnHover.png"));
             Return[2] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ReturnClicked.png"));

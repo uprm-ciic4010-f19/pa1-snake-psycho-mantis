@@ -7,6 +7,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.Random;
 
+import Game.GameStates.State;
+
 
 /**
  * Created by AlexVR on 7/2/2018.
@@ -22,6 +24,7 @@ public class Player {
     Color DarkPurple= new Color(66,28,82);
     public int xCoord;
     public int yCoord;
+    public boolean dead;
 
     public int moveCounter;
     
@@ -29,14 +32,6 @@ public class Player {
     public double currScore ;
 
     public String direction;//is your first name one?
-    
-    Random rand = new Random(); //random color generator
-
-	float r = rand.nextFloat();
-	float v = rand.nextFloat();
-	float b = rand.nextFloat();
-	
-	Color randomColor = new Color(r,v,b);
 	
     public Player(Handler handler){
         this.handler = handler;
@@ -48,16 +43,17 @@ public class Player {
         justDoubled = false; 
         justSlowed = false;
         partyTime = false;
+        dead = false;
         lenght= 1;
         currScore=0.0;
     
-        Random rand = new Random();
-
-    	float r = rand.nextFloat();
-    	float v = rand.nextFloat();
-    	float b = rand.nextFloat();
-    	
-    	Color randomColor = new Color(r,v,b);
+//        Random rand = new Random();
+//
+//    	float r = rand.nextFloat();
+//    	float v = rand.nextFloat();
+//    	float b = rand.nextFloat();
+//    	
+//    	Color randomColor = new Color(r,v,b);
     }
 
     public void tick(){
@@ -67,13 +63,14 @@ public class Player {
             moveCounter=0;
             
         }
-        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP)){
+        if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && (direction!="Down")){
             direction="Up";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN)){
+        
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_DOWN) && (direction!="Up")){
             direction="Down";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT)){
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_LEFT) && (direction!="Right")){
             direction="Left";
-        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT)){
+        }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_RIGHT) && (direction!="Left")){
             direction="Right";
         }if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_N)) {
         	handler.getWorld().body.addLast(new Tail(xCoord,yCoord,handler));
@@ -100,13 +97,20 @@ public class Player {
             case "Left":
                 if(xCoord==0){
                     xCoord = handler.getWorld().GridWidthHeightPixelCount-1;}
+                if (handler.getWorld().playerLocation[xCoord-1][yCoord]==true) {
+                	kill();
+                }
                 else {
                 	xCoord--;
                 }
+                
                 break;
             case "Right":
                 if(xCoord==handler.getWorld().GridWidthHeightPixelCount-1){
                 	xCoord=0;}
+                if (handler.getWorld().playerLocation[xCoord+1][yCoord]==true) {
+                	kill();
+                }
                 else {
                 	xCoord++; 
                 }
@@ -114,6 +118,9 @@ public class Player {
             case "Up":
                 if(yCoord==0){
                 	yCoord=handler.getWorld().GridWidthHeightPixelCount-1;}
+                if (handler.getWorld().playerLocation[xCoord][yCoord-1]==true) {
+                	kill();
+                }
                 else {
                 	yCoord--;
                 }
@@ -121,6 +128,9 @@ public class Player {
             case "Down":
                 if(yCoord==handler.getWorld().GridWidthHeightPixelCount-1){
                 	yCoord=0;}
+                if (handler.getWorld().playerLocation[xCoord][yCoord+1]==true) {
+                	kill();
+                }
                 else {
                 	yCoord++;
                 	}
@@ -226,7 +236,44 @@ public class Player {
                                 handler.getWorld().GridPixelsize,
                                 handler.getWorld().GridPixelsize);
                 		}
-                	}  	
+                	}
+                if(handler.getWorld().doubleUpLocation[i][j]) { 
+                	
+                	if (speed>0 && currScore>0.0) {
+                		
+            
+                		g.setColor(Color.ORANGE);
+                		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                 (j*handler.getWorld().GridPixelsize),
+                                 handler.getWorld().GridPixelsize,
+                                 handler.getWorld().GridPixelsize);
+                	}	
+                	else {
+                		g.setColor(DarkPurple);
+               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                (j*handler.getWorld().GridPixelsize),
+                                handler.getWorld().GridPixelsize,
+                                handler.getWorld().GridPixelsize);
+                	}
+                }
+                
+                if(handler.getWorld().slowDownLocation[i][j]) {
+                	
+                	if (speed<2) {
+                    g.setColor(Color.cyan);
+                    g.fillRect((i*handler.getWorld().GridPixelsize),
+                            (j*handler.getWorld().GridPixelsize),
+                            handler.getWorld().GridPixelsize,
+                            handler.getWorld().GridPixelsize);
+                	}
+                	else {
+                		g.setColor(DarkPurple);
+               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                (j*handler.getWorld().GridPixelsize),
+                                handler.getWorld().GridPixelsize,
+                                handler.getWorld().GridPixelsize);
+                			}	
+                		}
                 }
             }   
         }   
@@ -234,7 +281,15 @@ public class Player {
     	else {   
     		for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
+            	Random rand = new Random(); //random color generator
+
+            	float r = rand.nextFloat();
+            	float v = rand.nextFloat();
+            	float b = rand.nextFloat();
+            	
+            	Color randomColor = new Color(r,v,b);
             		g.setColor(randomColor); 
+            		
             		//changes color every time dance ball is clicked
             		// make it change color every 30 ticks or 6 moves
             		 if(playeLocation[i][j]) {
@@ -409,12 +464,15 @@ public class Player {
    }
     	
     public void kill(){
+    	
         lenght = 0;
         for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
             for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-
+            	
                 handler.getWorld().playerLocation[i][j]=false;
-
+                State.setState(handler.getGame().menuState);
+                
+                dead = true; 
             }
         }
     }
@@ -452,7 +510,7 @@ public class Player {
 	public void setCurrScore(double currScore) {
 		this.currScore = currScore;
 	}
-    public boolean partyTime() {
+    public boolean getPartyTime() {
     	return partyTime;
     }
     
@@ -460,4 +518,13 @@ public class Player {
     	this.partyTime = partyTime;
     	
     }
+    public boolean getDeadso() {
+    	return dead;
+    }
+    
+    public void setDeadso(boolean dead) {
+    	this.dead = dead;
+    	
+    
+}
 }

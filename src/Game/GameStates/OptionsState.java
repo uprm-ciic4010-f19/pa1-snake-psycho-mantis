@@ -26,7 +26,6 @@ public class OptionsState extends State {
             @Override
             public void onClick() {
                 handler.getMouseManager().setUimanager(null);
-                handler.getGame().reStart();
                 State.setState(handler.getGame().pauseState);
             }
         }));
@@ -35,20 +34,12 @@ public class OptionsState extends State {
             @Override
             public void onClick() {
                 handler.getMouseManager().setUimanager(null);
-                handler.getGame().reStart(); 
                 handler.getWorld().player.setPartyTime(true); 
             }
         }));
         
         }
     	
-    	// Move the Party click-able to top right for quality of life
-    	// Add another click-able to change the background color
-    	// Make it so applying partyTime doesn't reset the game/score
-    	
-    //Add Difficulty Screen? 
-    //Make it so starting and increasing speed are less or more in respected difficulties
-    
     @Override
     public void tick() {
         handler.getMouseManager().setUimanager(uiManager);
@@ -58,8 +49,8 @@ public class OptionsState extends State {
 
     @Override
     public void render(Graphics g) {
-    	g.setColor(Color.MAGENTA);
-        g.fillRect(0,0,handler.getWidth(),handler.getHeight());
+    	g.fillRect(0,0,handler.getWidth(),handler.getHeight());
+    	g.drawImage(Images.OptionsScreen,0,0,handler.getWidth(),handler.getHeight(),null);
         uiManager.Render(g);
 
     }
