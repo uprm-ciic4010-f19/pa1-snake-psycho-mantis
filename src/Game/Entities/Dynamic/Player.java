@@ -47,18 +47,12 @@ public class Player {
         lenght= 1;
         currScore=0.0;
     
-//        Random rand = new Random();
-//
-//    	float r = rand.nextFloat();
-//    	float v = rand.nextFloat();
-//    	float b = rand.nextFloat();
-//    	
-//    	Color randomColor = new Color(r,v,b);
     }
 
     public void tick(){
     	moveCounter++;
         if(moveCounter>=speed) {
+       // 	handler.getWorld().apple.setGood(false); <- to change apple to rotten
             checkCollisionAndMove();
             moveCounter=0;
             
@@ -168,156 +162,158 @@ public class Player {
     }
     public void render(Graphics g,Boolean[][] playeLocation){
 
-    	if (!partyTime) {
-        for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
-            for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-                g.setColor(Color.GREEN);
-                
+        	if (!partyTime) {
+            for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
+                for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
+                    g.setColor(Color.GREEN);
+                    
 
-                if(playeLocation[i][j]){
-                    g.fillRect((i*handler.getWorld().GridPixelsize),
-                            (j*handler.getWorld().GridPixelsize),
-                            handler.getWorld().GridPixelsize,
-                            handler.getWorld().GridPixelsize);
-                }
-          
-                if(handler.getWorld().doubleUpLocation[i][j]) { 
-                	
-                	if (speed>0 && currScore>0.0) {
-                		
-            
-                		g.setColor(Color.ORANGE);
-                		 g.fillRect((i*handler.getWorld().GridPixelsize),
-                                 (j*handler.getWorld().GridPixelsize),
-                                 handler.getWorld().GridPixelsize,
-                                 handler.getWorld().GridPixelsize);
-                	}	
-                	else {
-                		g.setColor(DarkPurple);
-               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                    if(playeLocation[i][j]){
+                        g.fillRect((i*handler.getWorld().GridPixelsize),
                                 (j*handler.getWorld().GridPixelsize),
                                 handler.getWorld().GridPixelsize,
                                 handler.getWorld().GridPixelsize);
-                	}
-                }
+                    }
+              
+                    if(handler.getWorld().doubleUpLocation[i][j]) { 
+                    	
+                    	if (speed>0 && currScore>0.0) {
+                    		
                 
-                if(handler.getWorld().slowDownLocation[i][j]) {
-                	
-                	if (speed<2) {
-                    g.setColor(Color.cyan);
-                    g.fillRect((i*handler.getWorld().GridPixelsize),
-                            (j*handler.getWorld().GridPixelsize),
-                            handler.getWorld().GridPixelsize,
-                            handler.getWorld().GridPixelsize);
-                	}
-                	else {
-                		g.setColor(DarkPurple);
-               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                    		g.setColor(Color.ORANGE);
+                    		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                     (j*handler.getWorld().GridPixelsize),
+                                     handler.getWorld().GridPixelsize,
+                                     handler.getWorld().GridPixelsize);
+                    	}	
+                    	else {
+                    		g.setColor(DarkPurple);
+                   		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                    (j*handler.getWorld().GridPixelsize),
+                                    handler.getWorld().GridPixelsize,
+                                    handler.getWorld().GridPixelsize);
+                    	}
+                    }
+                    
+                    if(handler.getWorld().slowDownLocation[i][j]) {
+                    	
+                    	if (speed<2) {
+                        g.setColor(Color.cyan);
+                        g.fillRect((i*handler.getWorld().GridPixelsize),
                                 (j*handler.getWorld().GridPixelsize),
                                 handler.getWorld().GridPixelsize,
                                 handler.getWorld().GridPixelsize);
-                			}	
-                		}
-                	
-                
-                
-                if(handler.getWorld().appleLocation[i][j]) {
-                	if(handler.getWorld().apple.good) {
-                		 g.setColor(Color.RED);
-                		 g.fillRect((i*handler.getWorld().GridPixelsize),
-                                 (j*handler.getWorld().GridPixelsize),
-                                 handler.getWorld().GridPixelsize,
-                                 handler.getWorld().GridPixelsize);
-                	}
-                	else {
-                	 g.setColor(Color.YELLOW);
-               		 g.fillRect((i*handler.getWorld().GridPixelsize),
-                                (j*handler.getWorld().GridPixelsize),
-                                handler.getWorld().GridPixelsize,
-                                handler.getWorld().GridPixelsize);
-                		}
-                	}
-                if(handler.getWorld().doubleUpLocation[i][j]) { 
-                	
-                	if (speed>0 && currScore>0.0) {
-                		
-            
-                		g.setColor(Color.ORANGE);
-                		 g.fillRect((i*handler.getWorld().GridPixelsize),
-                                 (j*handler.getWorld().GridPixelsize),
-                                 handler.getWorld().GridPixelsize,
-                                 handler.getWorld().GridPixelsize);
-                	}	
-                	else {
-                		g.setColor(DarkPurple);
-               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
-                                (j*handler.getWorld().GridPixelsize),
-                                handler.getWorld().GridPixelsize,
-                                handler.getWorld().GridPixelsize);
-                	}
-                }
-                
-                if(handler.getWorld().slowDownLocation[i][j]) {
-                	
-                	if (speed<2) {
-                    g.setColor(Color.cyan);
-                    g.fillRect((i*handler.getWorld().GridPixelsize),
-                            (j*handler.getWorld().GridPixelsize),
-                            handler.getWorld().GridPixelsize,
-                            handler.getWorld().GridPixelsize);
-                	}
-                	else {
-                		g.setColor(DarkPurple);
-               		 	g.fillRect((i*handler.getWorld().GridPixelsize),
-                                (j*handler.getWorld().GridPixelsize),
-                                handler.getWorld().GridPixelsize,
-                                handler.getWorld().GridPixelsize);
-                			}	
-                		}
-                }
+                    	}
+                    	else {
+                    		g.setColor(DarkPurple);
+                   		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                    (j*handler.getWorld().GridPixelsize),
+                                    handler.getWorld().GridPixelsize,
+                                    handler.getWorld().GridPixelsize);
+                    			}	
+                    		}
+                    	
+                    
+                    
+                    if(handler.getWorld().appleLocation[i][j]) {
+                    	if(handler.getWorld().apple.good) {
+                    		 g.setColor(Color.RED);
+                    		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                     (j*handler.getWorld().GridPixelsize),
+                                     handler.getWorld().GridPixelsize,
+                                     handler.getWorld().GridPixelsize);
+                    	}
+                    	else {
+                    	 g.setColor(Color.YELLOW);
+                   		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                    (j*handler.getWorld().GridPixelsize),
+                                    handler.getWorld().GridPixelsize,
+                                    handler.getWorld().GridPixelsize);
+                    		}
+                    	}  	
+                    }
+                }   
             }   
-        }   
-    	
-    	else {   
-    		for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
-            for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
-            	Random rand = new Random(); //random color generator
+        	
+        	else {   
+        		for (int i = 0; i < handler.getWorld().GridWidthHeightPixelCount; i++) {
+                for (int j = 0; j < handler.getWorld().GridWidthHeightPixelCount; j++) {
+                	
+                    Random rand = new Random(); //random color generator
 
-            	float r = rand.nextFloat();
-            	float v = rand.nextFloat();
-            	float b = rand.nextFloat();
-            	
-            	Color randomColor = new Color(r,v,b);
-            		g.setColor(randomColor); 
-            		
-            		//changes color every time dance ball is clicked
-            		// make it change color every 30 ticks or 6 moves
-            		 if(playeLocation[i][j]) {
-                    g.fillRect((i*handler.getWorld().GridPixelsize),
-                            (j*handler.getWorld().GridPixelsize),
-                            handler.getWorld().GridPixelsize,
-                            handler.getWorld().GridPixelsize);
-                }
-                if(handler.getWorld().appleLocation[i][j]) {
-                	if(handler.getWorld().apple.good) {
-                		g.setColor(Color.RED);
-                		 g.fillRect((i*handler.getWorld().GridPixelsize),
-                                 (j*handler.getWorld().GridPixelsize),
-                                 handler.getWorld().GridPixelsize,
-                                 handler.getWorld().GridPixelsize);
-                	}
-                	else {
-                		g.setColor(Color.GREEN);
-               		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                	float r = rand.nextFloat();
+                	float v = rand.nextFloat();
+                	float b = rand.nextFloat();
+                	
+                	Color randomColor = new Color(r,v,b);
+                		g.setColor(randomColor); 
+                		//changes color every time dance ball is clicked
+                		// make it change color every 30 ticks or 6 moves
+                		 if(playeLocation[i][j]) {
+                        g.fillRect((i*handler.getWorld().GridPixelsize),
                                 (j*handler.getWorld().GridPixelsize),
                                 handler.getWorld().GridPixelsize,
                                 handler.getWorld().GridPixelsize);
-                		}
-                	}
+                    }
+                    if(handler.getWorld().appleLocation[i][j]) {
+                    	if(handler.getWorld().apple.good) {
+                    		g.setColor(Color.RED);
+                    		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                     (j*handler.getWorld().GridPixelsize),
+                                     handler.getWorld().GridPixelsize,
+                                     handler.getWorld().GridPixelsize);
+                    	}
+                    	else {
+                    		g.setColor(Color.GREEN);
+                   		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                    (j*handler.getWorld().GridPixelsize),
+                                    handler.getWorld().GridPixelsize,
+                                    handler.getWorld().GridPixelsize);
+                    		}
+                    	}
+ if(handler.getWorld().doubleUpLocation[i][j]) { 
+                    	
+                    	if (speed>0 && currScore>0.0) {
+                    		
+                
+                    		g.setColor(Color.ORANGE);
+                    		 g.fillRect((i*handler.getWorld().GridPixelsize),
+                                     (j*handler.getWorld().GridPixelsize),
+                                     handler.getWorld().GridPixelsize,
+                                     handler.getWorld().GridPixelsize);
+                    	}	
+                    	else {
+                    		g.setColor(DarkPurple);
+                   		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                    (j*handler.getWorld().GridPixelsize),
+                                    handler.getWorld().GridPixelsize,
+                                    handler.getWorld().GridPixelsize);
+                    	}
+                    }
+                    
+                    if(handler.getWorld().slowDownLocation[i][j]) {
+                    	
+                    	if (speed<2) {
+                        g.setColor(Color.cyan);
+                        g.fillRect((i*handler.getWorld().GridPixelsize),
+                                (j*handler.getWorld().GridPixelsize),
+                                handler.getWorld().GridPixelsize,
+                                handler.getWorld().GridPixelsize);
+                    	}
+                    	else {
+                    		g.setColor(DarkPurple);
+                   		 	g.fillRect((i*handler.getWorld().GridPixelsize),
+                                    (j*handler.getWorld().GridPixelsize),
+                                    handler.getWorld().GridPixelsize,
+                                    handler.getWorld().GridPixelsize);
+                    			}	
+                    		}
+                    }
                 }
             }
-        }
-    }        
+        }        
+
+       
 
     public void Eat(){
     	currScore += Math.sqrt((2*currScore)+1);
@@ -510,13 +506,18 @@ public class Player {
 	public void setCurrScore(double currScore) {
 		this.currScore = currScore;
 	}
-    public boolean getPartyTime() {
+    public boolean partyTime() {
     	return partyTime;
     }
     
     public void setPartyTime(boolean partyTime) {
     	this.partyTime = partyTime;
     	
+    }
+    
+    public Boolean getPartyTime() {
+    	return partyTime;
+
     }
     public boolean getDeadso() {
     	return dead;

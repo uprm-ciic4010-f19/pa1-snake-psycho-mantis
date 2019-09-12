@@ -25,13 +25,20 @@ public class Apple {
     	// Make it so after a certain amount of steps good=false
     	if (!good) {
     		
-    		
     		handler.getWorld().player.lenght--;
     		handler.getWorld().player.currScore = handler.getWorld().player.currScore-Math.sqrt((2*handler.getWorld().player.currScore)+1);
     		
     		
     	}
     	
+    	
     }
 
+    public boolean getGood() {
+		return good;
+	}
+
+	public void setGood(boolean good) {
+		this.good = good;
+	}
 }
