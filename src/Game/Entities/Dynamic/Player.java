@@ -27,9 +27,10 @@ public class Player {
     public boolean dead;
 
     public int moveCounter;
+    public int steps;
     
     public int speed = 10;
-    public double currScore ;
+    public double currScore;
 
     public String direction;//is your first name one?
 	
@@ -38,6 +39,7 @@ public class Player {
         xCoord = 0;
         yCoord = 0;
         moveCounter = 0;
+        steps = 0;
         direction= "Right";
         justAte = false;
         justDoubled = false; 
@@ -52,10 +54,13 @@ public class Player {
     public void tick(){
     	moveCounter++;
         if(moveCounter>=speed) {
-       // 	handler.getWorld().apple.setGood(false); <- to change apple to rotten
             checkCollisionAndMove();
+            steps = steps+1;
             moveCounter=0;
-            
+        }
+        if (steps>=120) {
+        	handler.getWorld().apple.setGood(false);
+        	steps=0;
         }
         if(handler.getKeyManager().keyJustPressed(KeyEvent.VK_UP) && (direction!="Down")){
             direction="Up";
@@ -82,7 +87,9 @@ public class Player {
         
     
         }
+    
 
+            
     public void checkCollisionAndMove(){
         handler.getWorld().playerLocation[xCoord][yCoord]=false;
         int x = xCoord;
@@ -247,8 +254,7 @@ public class Player {
                 	
                 	Color randomColor = new Color(r,v,b);
                 		g.setColor(randomColor); 
-                		//changes color every time dance ball is clicked
-                		// make it change color every 30 ticks or 6 moves
+                		
                 		 if(playeLocation[i][j]) {
                         g.fillRect((i*handler.getWorld().GridPixelsize),
                                 (j*handler.getWorld().GridPixelsize),
@@ -271,7 +277,7 @@ public class Player {
                                     handler.getWorld().GridPixelsize);
                     		}
                     	}
- if(handler.getWorld().doubleUpLocation[i][j]) { 
+                    if(handler.getWorld().doubleUpLocation[i][j]) { 
                     	
                     	if (speed>0 && currScore>0.0) {
                     		
@@ -311,8 +317,7 @@ public class Player {
                     }
                 }
             }
-        }        
-
+        }
        
 
     public void Eat(){
@@ -443,6 +448,7 @@ public class Player {
     	this.justDoubled=false;
     	}
    }
+    
     
     public void Slow(){
     	if (speed<2) {
