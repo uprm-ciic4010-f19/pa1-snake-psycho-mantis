@@ -15,7 +15,7 @@ public class Images {
     public static BufferedImage title;
     public static BufferedImage Pause;
     public static BufferedImage[] Resume;
-    public static BufferedImage[] BTitle;
+    public static BufferedImage[] Help;
     public static BufferedImage[] Options;
     public static BufferedImage OptionsScreen;
     public static BufferedImage[] party;
@@ -28,7 +28,7 @@ public class Images {
 
         butstart = new BufferedImage[3];
         Resume = new BufferedImage[2];
-        BTitle = new BufferedImage[2];
+        Help = new BufferedImage[2];
         Options = new BufferedImage[2];
         party = new BufferedImage[3];
         Return = new BufferedImage[3];
@@ -40,8 +40,8 @@ public class Images {
             Pause = ImageIO.read(getClass().getResourceAsStream("/Sheets/Pause.png"));
             Resume[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/Resume.png"));
             Resume[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/ResumeP.png"));
-            BTitle[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/BTitle.png"));
-            BTitle[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/BTitleP.png"));
+            Help[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/Help.png"));
+            Help[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/HelpP.png"));
             Options[0] = ImageIO.read(getClass().getResourceAsStream("/Buttons/Options.png"));
             Options[1] = ImageIO.read(getClass().getResourceAsStream("/Buttons/OptionsP.png"));
             butstart[0]= ImageIO.read(getClass().getResourceAsStream("/Buttons/NormBut.png"));//normbut
