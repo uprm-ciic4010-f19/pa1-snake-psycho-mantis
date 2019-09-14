@@ -42,7 +42,7 @@ public class OptionsState extends State {
             @Override
             public void onClick() {
                 handler.getMouseManager().setUimanager(null);
-            	if (handler.getWorld().player.getPartyTime().equals(true)) {
+            	if (handler.getWorld().player.getPartyTime()) {
         			handler.getWorld().player.setPartyTime(false);}
         			else {
                 handler.getWorld().player.setPartyTime(true); }
